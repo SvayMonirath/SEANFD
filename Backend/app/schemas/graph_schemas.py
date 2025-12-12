@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from typing import Optional
 
 class FactorWeights(BaseModel):
     social: bool
@@ -11,4 +12,13 @@ class GraphRequest(BaseModel):
     eventTitle: str
     origin: str
     activeFactors: FactorWeights
-    threshold: float = 0.55
+
+class AnalysisRequest(BaseModel):
+    nodes: list[str]
+    edges: list[dict]
+
+class ShortestPathRequest(BaseModel):
+    nodes: list[str]
+    edges: list[dict]
+    target: str
+    origin: str

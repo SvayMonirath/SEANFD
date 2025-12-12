@@ -15,8 +15,10 @@ def create_app() -> FastAPI:
 
     from app.routers.graph import router as graph_router
     from app.routers.data import router as data_router
+    from app.routers.analysis import router as analysis_router
     app.include_router(graph_router)
     app.include_router(data_router)
+    app.include_router(analysis_router)
 
     return app
 

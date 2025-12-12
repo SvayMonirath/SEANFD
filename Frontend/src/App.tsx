@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import { useState } from 'react'
-import { Home } from './Components/Home'
-import { Graph } from './Components/graph'
+import { Home } from './Components/Home/Home'
+import { Graph } from './Components/Graph/Graph'
 
 import './App.css'
 
