@@ -29,6 +29,8 @@ async def generate_graph(
         print("Error during graph calculation:", str(e))
         raise HTTPException(status_code=404, detail=str(e))
 
+
+
 @router.post("/shortest_path")
 async def shortest_path(
     request: ShortestPathRequest,

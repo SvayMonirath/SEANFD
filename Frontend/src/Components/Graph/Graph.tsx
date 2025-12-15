@@ -270,8 +270,9 @@ export const Graph = () => {
         </div>
       )}
 
-      <nav className="flex flex-row p-6 bg-slate-900 justify-between items-center">
-        <div className="text-white! font-bold text-xl md:text-3xl lg:text-4xl flex items-center gap-4 w-1/6">
+      {/* Navbar */}
+      <nav className="flex flex-row p-4 md:p-6 bg-slate-900 justify-between items-center flex-wrap">
+        <div className="text-white font-bold text-xl md:text-3xl lg:text-4xl flex items-center gap-4">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="40"
@@ -290,34 +291,35 @@ export const Graph = () => {
           <span>SEANFD</span>
         </div>
 
-        <div className="flex flex-row space-x-6 items-center w-4/6 justify-center">
+        <div className="flex flex-row space-x-2 md:space-x-6 items-center mt-2 md:mt-0 flex-wrap justify-center w-full md:w-auto">
           <Link
             to="/"
-            className="text-white! text-xl px-3 py-2 rounded-md font-medium hover:bg-slate-700 transition duration-200"
+            className="!text-white text-xl px-3 py-2 rounded-md font-medium hover:bg-slate-700 transition duration-200"
           >
             Home
           </Link>
           <Link
             to="/Graph"
-            className="text-white! text-xl bg-slate-600/50 px-6 py-3 rounded-md font-medium hover:bg-slate-700 transition duration-200"
+            className="!text-white text-xl bg-slate-600/50 px-6 py-3 rounded-md font-medium hover:bg-slate-700 transition duration-200"
           >
             Network Graph
           </Link>
           <Link
             to="/Settings"
-            className="text-white! text-xl px-3 py-2 rounded-md font-medium hover:bg-slate-700 transition duration-200"
+            className="!text-white text-xl px-3 py-2 rounded-md font-medium hover:bg-slate-700 transition duration-200"
           >
             Settings
           </Link>
         </div>
 
-        <div className="flex flex-row w-1/6 justify-end">
-          {/* export only if there is data */}
+        <div className="flex flex-row justify-end mt-2 md:mt-0 w-full md:w-auto">
           <button
-            className={`px-6 py-3 !bg-green-800 text-white !font-bold !text-lg rounded-md hover:!bg-green-700 transition duration-200 ${
-              !data ? "opacity-50 cursor-not-allowed" : ""
-            }`}
-            disabled={!data}
+            // if no data, no reciprocal data, no degree data then button must not be clickable
+            className={`
+              text-white !px-6 !py-3 rounded-md !text-lg !font-bold  transition duration-200
+                ${data && reciprocalData && degreeData ? "cursor-pointer !bg-cyan-800 hover:!bg-cyan-700" : "!cursor-not-allowed !bg-cyan-800 !opacity-35"}
+              `}
+            disabled={!(data && reciprocalData && degreeData)}
           >
             Export Data
           </button>
@@ -565,9 +567,9 @@ export const Graph = () => {
       {/* ANALYSIS SECTION */}
       <div className="w-full text-white bg-slate-900">
         {/* Header */}
-        <div className="p-8 border-b border-cyan-500/20">
-          <h1 className="text-cyan-400 font-bold text-4xl tracking-tight">
-            Network Analysis
+        <div className="p-8 border-b border-cyan-500/20 flex justify-center flex-col items-center">
+          <h1 className="bg-gradient-to-br from-white to-blue-500 bg-clip-text text-transparent font-medium !text-5xl lg:!text-6xl xl:!text-7xl ">
+            Analysis
           </h1>
           <p className="text-slate-400 text-sm mt-2">
             Detailed metrics and insights about your network graph
@@ -639,7 +641,7 @@ export const Graph = () => {
                       {shortestPathData.map((node: string, idx: number) => (
                         <div key={idx} className="flex items-center gap-2">
                           <div className="bg-gradient-to-br from-cyan-500 to-cyan-600 px-4 py-2 rounded-lg shadow-lg border border-cyan-400/50 min-w-[100px] text-center">
-                            <p className="text-white font-bold text-sm">
+                            <p className="text-white font-semibold text-2xl">
                               {node}
                             </p>
                           </div>
@@ -707,11 +709,11 @@ export const Graph = () => {
                         Bidirectional relationships
                       </p>
                     </div>
-                    <div className="bg-gradient-to-br from-orange-900/30 to-slate-800/30 p-6 rounded-lg border border-orange-500/30">
+                    <div className="bg-gradient-to-br from-purple-900/30 to-slate-800/30 p-6 rounded-lg border border-purple-500/30">
                       <p className="text-slate-400 text-xs uppercase tracking-wide mb-3">
                         One-Way Edges
                       </p>
-                      <p className="text-4xl font-bold text-orange-400">
+                      <p className="text-4xl font-bold text-purple-400">
                         {reciprocalData.one_way_edges?.length || 0}
                       </p>
                       <p className="text-xs text-slate-500 mt-2">
@@ -723,7 +725,7 @@ export const Graph = () => {
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     {/* One-Way Edges */}
                     <div>
-                      <h4 className="text-sm font-bold text-orange-300 mb-4 uppercase tracking-wide">
+                      <h4 className="text-sm font-bold text-purple-300 mb-4 uppercase tracking-wide">
                         One-Way Connections
                       </h4>
                       <div className="bg-slate-700/30 rounded-lg p-4 max-h-48 overflow-y-auto space-y-2 border border-slate-600/40">
@@ -744,7 +746,7 @@ export const Graph = () => {
                                 <span className="text-slate-200 font-medium">
                                   {edge.from} → {edge.to}
                                 </span>
-                                <span className="text-orange-400 font-semibold text-xs bg-orange-950/50 px-2 py-1 rounded">
+                                <span className="text-purple-400 font-semibold text-xs bg-purple-950/50 px-2 py-1 rounded">
                                   {edge.weight.toFixed(2)}
                                 </span>
                               </div>
@@ -760,7 +762,7 @@ export const Graph = () => {
 
                     {/* Strongest Reciprocal Pairs */}
                     <div>
-                      <h4 className="text-sm font-bold text-emerald-300 mb-4 uppercase tracking-wide">
+                      <h4 className="text-sm font-bold text-purple-300 mb-4 uppercase tracking-wide">
                         Strongest Reciprocal Pairs
                       </h4>
                       <div className="bg-slate-700/30 rounded-lg p-4 max-h-48 overflow-y-auto space-y-2 border border-slate-600/40">
@@ -780,7 +782,7 @@ export const Graph = () => {
                                 <span className="text-slate-200 font-medium">
                                   {pair.pair[0]} ↔ {pair.pair[1]}
                                 </span>
-                                <span className="text-emerald-400 font-semibold text-xs bg-emerald-950/50 px-2 py-1 rounded">
+                                <span className="text-purple-400 font-semibold text-xs bg-purple-950/50 px-2 py-1 rounded">
                                   {pair.average_weight.toFixed(2)}
                                 </span>
                               </div>
@@ -817,22 +819,22 @@ export const Graph = () => {
               {degreeData ? (
                 <div className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div className="bg-gradient-to-br from-cyan-900/30 to-slate-800/30 p-6 rounded-lg border border-cyan-500/30">
+                    <div className="bg-gradient-to-br from-emerald-900/30 to-slate-800/30 p-6 rounded-lg border border-emerald-500/30">
                       <p className="text-slate-400 text-xs uppercase tracking-wide mb-3">
                         Max In-Degree
                       </p>
-                      <p className="text-4xl font-bold text-cyan-400">
+                      <p className="text-4xl font-bold text-emerald-400">
                         {Math.max(...Object.values(degreeData.in_degree))}
                       </p>
                       <p className="text-xs text-slate-500 mt-2">
                         Incoming connections
                       </p>
                     </div>
-                    <div className="bg-gradient-to-br from-orange-900/30 to-slate-800/30 p-6 rounded-lg border border-orange-500/30">
+                    <div className="bg-gradient-to-br from-emerald-900/30 to-slate-800/30 p-6 rounded-lg border border-emerald-500/30">
                       <p className="text-slate-400 text-xs uppercase tracking-wide mb-3">
                         Max Out-Degree
                       </p>
-                      <p className="text-4xl font-bold text-orange-400">
+                      <p className="text-4xl font-bold text-emerald-400">
                         {Math.max(...Object.values(degreeData.out_degree))}
                       </p>
                       <p className="text-xs text-slate-500 mt-2">
