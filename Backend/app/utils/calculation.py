@@ -7,18 +7,13 @@ async def calculate_full_graph(
     session: AsyncSession,
     event_title: str,
     origin: str,
-    active_factors  # dict or Pydantic model
+    active_factors
 ) -> dict:
-    """
-    Calculate a subgraph starting from origin, including all countries recursively,
-    filtered by active factors. Threshold is dynamically decided based on neighbor scores.
-    """
     from collections import deque
 
     if not isinstance(active_factors, dict):
         active_factors = active_factors.dict()
 
-    # Fetch event factors
     result = await session.execute(
         select(EventFactor).where(EventFactor.event_title == event_title)
     )
@@ -60,13 +55,11 @@ async def calculate_full_graph(
             weighted_score = total_score / num_active
             neighbor_scores.append((c.to_country, weighted_score))
 
-        # Compute dynamic threshold as the **average of all neighbor scores**
         scores_only = [score for _, score in neighbor_scores if score is not None]
         if not scores_only:
-            continue  # no neighbors to connect
+            continue
         dynamic_threshold = sum(scores_only) / len(scores_only)
 
-        # Add edges above dynamic threshold
         for to_country, score in neighbor_scores:
             if score >= dynamic_threshold:
                 edges.append({
@@ -79,8 +72,6 @@ async def calculate_full_graph(
                     nodes.add(to_country)
 
     return {"nodes": list(nodes), "edges": edges, "threshold": dynamic_threshold}
-
-
 
 def analyze_reciprocity(nodes: List[str], edges: List[Dict]) -> Dict:
 
@@ -134,7 +125,6 @@ def degree_analysis(nodes: List[str], edges: List[Dict]) -> Dict:
 
     total_degree = {node: in_degree[node] + out_degree[node] for node in nodes}
 
-    # Sorted by total degree
     sorted_degrees = sorted(total_degree.items(), key=lambda x: x[1], reverse=True)
 
     return {

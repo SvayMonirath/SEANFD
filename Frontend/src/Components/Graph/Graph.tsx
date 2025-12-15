@@ -96,7 +96,6 @@ export const Graph = () => {
       if (res.ok) {
         const Data = await res.json();
         setData(Data.graph);
-        // node cant be selectedcountry
         setNodes(
           Data.graph.nodes.filter((node: string) => node !== selectedCountry)
         );
@@ -581,7 +580,7 @@ export const Graph = () => {
           <div className="bg-gradient-to-br from-slate-800/60 to-slate-900/60 rounded-xl border border-cyan-500/30 overflow-hidden">
             <div className="px-8 py-6 bg-gradient-to-r from-cyan-600/10 to-transparent border-b border-cyan-500/20">
               <h3 className="text-xl font-bold text-cyan-300 uppercase tracking-wide">
-                🗺️ Shortest Path Analysis
+                ️Shortest Path Analysis
               </h3>
             </div>
 
@@ -690,7 +689,7 @@ export const Graph = () => {
           <div className="bg-gradient-to-br from-slate-800/60 to-slate-900/60 rounded-xl border border-purple-500/30 overflow-hidden">
             <div className="px-8 py-6 bg-gradient-to-r from-purple-600/10 to-transparent border-b border-purple-500/20">
               <h3 className="text-xl font-bold text-purple-300 uppercase tracking-wide">
-                🔄 Reciprocity Analysis
+                 Reciprocity in Direct Graph
               </h3>
             </div>
 
@@ -807,11 +806,11 @@ export const Graph = () => {
             </div>
           </div>
 
-          {/* Degree Analysis */}
+          {/* Degree Centrality */}
           <div className="bg-gradient-to-br from-slate-800/60 to-slate-900/60 rounded-xl border border-emerald-500/30 overflow-hidden">
             <div className="px-8 py-6 bg-gradient-to-r from-emerald-600/10 to-transparent border-b border-emerald-500/20">
               <h3 className="text-xl font-bold text-emerald-300 uppercase tracking-wide">
-                📊 Degree Analysis
+                 Degree Centrality
               </h3>
             </div>
 
